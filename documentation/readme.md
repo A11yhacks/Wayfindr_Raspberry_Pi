@@ -11,7 +11,7 @@ This activity uses BLE beacons & Raspberry Pis to create a high-tech treasure hu
 
 * A BLE beacon for each location minus the starting one. Beacons should be compatible with Apple's iBeacon standard. We have had good results using Estimote (http://www.estimote.com) beacons in iBeacon mode.
 * Enough Raspberry Pi 3's, speakers & power sources (E.G. power bars) for everyone. You may be able to use other SBC's so long as you are able to use Bluetooth & run Python but some of the code is Raspbian-specific. Older Pis should also work so long as a Bluetooth adaptor is present. NB: we had relatively good success in splitting participants into groups & giving each group a Pi, but if headphones are being used watch out for trailing wires!
-* A modified `hunt.py` and `debug.py` (it is very unlikely that the supplied code will work out of the box for you).
+* A modified `wayfindr.py` and `debug.py` (it is very unlikely that the supplied code will work out of the box for you).
 * To ensure the smooth running of the activity it would be preferable if you are able to familiarise yourself with the location beforehand (see the planning a root section below).
 
 ##Understanding how iBeacons work:
@@ -50,16 +50,17 @@ The following steps are based on our experiences with Estimote beacons but the s
 
 ##Setting up a Pi:
 
-These steps assume that you have a working Raspbian install & you are reasonably familiar with how it operates. Steps 1, 2 and 3 should be completed before you carry out the steps in the "planning a root" section. Steps 5 & 6 should only be performed when you are happy with your root & you have modified hunt.py to work with your setup.
+These steps assume that you have a working Raspbian install & you are reasonably familiar with how it operates. Steps 1, 2 and 3 should be completed before you carry out the steps in the "planning a root" section. Steps 5 & 6 should only be performed when you are happy with your root & you have modified wayfindr.py to work with your setup.
 
 1. Copy the 3 .py files to a sensible location.
 2. For debugging during the planning root sections we highly recommend you connect the Pi to a wireless network.
 3. Run the following commands to install dependencies:
   1. `sudo apt-get update`
   2. `sudo apt-get install python-bluez`
+  3. `sudo apt-get install flite`
 4. Copy all of the sounds into the directory in step 1.
-5. We now need to make hunt.py run when the Pi boots. To do this run `sudo raspi-config` Choosing options 3 then b4.
-6. Edit `/home/pi/.config/lxsession/LXDE-pi/autostart` Where pi is the name of your user account. You will need to `sudo` to modify this file. Add `*/usr/bin/sudo python /home/pi/hunt.py`.
+5. We now need to make wayfindr.py run when the Pi boots. To do this run `sudo raspi-config` Choosing options 3 then b4.
+6. Edit `/home/pi/.config/lxsession/LXDE-pi/autostart` Where pi is the name of your user account. You will need to `sudo` to modify this file. Add `*/usr/bin/sudo python /home/pi/wayfindr.py`.
 
 ##Planning a root:
 
@@ -77,9 +78,9 @@ We found that a treasure hunt that contained 11 clues took just over 5 hours of 
 
 * bluescan.py - methods to scan for nearby BLE devices. Participants need not concern themselves with the content of this file.
 * debug.py - a minimal implementation of the treasure hunt activity for debugging purposes.
-* hunt.py - the main treasure hunt file that participants should modify.
+* wayfindr.py - the main treasure hunt file that participants should modify.
 
-##Understanding hunt.py:
+##Understanding wayfindr.py:
 
 Whilst the code is well commented, a breakdown of the various methods & sections of the file can be found below:
 
@@ -105,9 +106,5 @@ Whilst the code is well commented, a breakdown of the various methods & sections
 
 The activity relies on a number of different sounds in order to function:
 
-* x.wav - played when a beacon with a minor value of x is encountered.
-* preclue.wav - played before each clue.
-* startup.wav - played when all the setup is complete.
-* intro.wav - the introduction sound. In our implementation this was a clue.
-
-Use a sound recorder of your choice - E.G. Audacity to record the various sounds taking care to ensure that the names are exactly like the ones above.
+* ALERT_GENERAL.wav - played before each instruction is spoken.
+* ALERT_JOURNEY_COMPLETE.wav - played after the final instruction of the root has been spoken.
