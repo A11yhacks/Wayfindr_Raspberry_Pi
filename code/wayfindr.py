@@ -1,5 +1,5 @@
-#a11yhacks treasure hunt activity
-#Ben Mustill-Rose 10/09/2016
+#a11yhacks Wayfindr activity
+#Ben Mustill-Rose 26/10/2016
 #Based on jcs 6/8/2014 & see blescan.py for additional credits
 
 #Import all the modules we need
@@ -33,7 +33,7 @@ def parsePacket(packet):
 #Play a clue sound
 def playClue(id):
  try:
-  os.system("aplay preclue.wav > /dev/null 2>&1")
+  os.system("aplay ALERT_GENERAL.wav > /dev/null 2>&1")
   os.system("aplay "+str(id)+".wav > /dev/null 2>&1")
   os.system("aplay "+str(id)+".wav > /dev/null 2>&1")
  except:
@@ -68,6 +68,8 @@ while True:
     print(parsed["minor"])
     playClue(parsed["minor"])
     lastEncounterediBeacon=parsed["minor"]
-    if parsed["minor"] == "12": os.system("sudo shutdown now")
+    if parsed["minor"] == "12":
+     os.system("aplay ALERT_JOURNEY_COMPLETE.wav > /dev/null 2>&1")
+     os.system("sudo shutdown now")
   except:
    pass
