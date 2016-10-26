@@ -65,11 +65,11 @@ These steps assume that you have a working Raspbian install & you are reasonably
 ##Planning a root:
 
 The effectiveness of wireless transmition varies drastically depending on the devices in use, other nearby devices & your location. It is there for important to resist the urge to assume that once you have everything working in one location it will perform even remotely identically at the location you wish to run the activity in.
-We found that a treasure hunt that contained 11 clues took just over 5 hours of setup for 2 people with very few interruptions. Our experiences suggest that more people would not necessarily decrease the setup time but familiarity with the location may do. We recommend that a dry run is carried out the day before the event & that the beacons are left in situ overnight once everything is setup if at all possible.
+When planning a similar activity we found that a root that contained 11 beacons took just over 5 hours of setup for 2 people with very few interruptions. Our experiences suggest that more people would not necessarily decrease the setup time but familiarity with the location may do. We recommend that a dry run is carried out the day before the event & that the beacons are left in situ overnight once everything is setup if at all possible.
 
 1. Place the beacons in the desired locations.
-2. We now need to make sure that the range of the beacons is appropriate & that none of them overlap; this is probably the longest & most frustrating part of the setup process but stick with it! You will need a way of receiving output from a Pi whilst walking about; we used a laptop connected via SSH via a phone that was broadcasting a wireless network. Once everything's working, run `python debug.py` and consult the output. This script is a minimal version of the treasure hunt which, as the name implies, is designed for debugging your root. When a beacon is in range its major & minor values are printed, although if multiple packets are received in a ro from one beacon only the first is displayed. If you have modified a given beacon and wish to test its range again, you will need to walk to the sight of another beacon then walk back to the original one. The Shutdown functionality has not been implemented in this script.
-3. Walk your root taking care to pass the clues in the same order that the participants will do whilst checking that you are happy with the performance of the beacons. Pay particular attention to scenarios where 2 beacons are close to each other, consulting the output from the Pi to make sure that it is not possible for both of them to be detected at the same time. If this does happen, experiment with repositioning one of the beacons slightly - E.G. high up, low down, inside a cupboard, behind a door etc. Please also be mindful of scenarios where participants may pass a clue on root to another one - E.G. try to avoid clue 5 sounding when participants are on their way to clue 2. We found the Estimote companion app useful for modifying the range of individual beacons on the go for scenarios where "3 feet" was actually considerably less due to the environment.
+2. We now need to make sure that the range of the beacons is appropriate & that none of them overlap; this is probably the longest & most frustrating part of the setup process but stick with it! You will need a way of receiving output from a Pi whilst walking about; we used a laptop connected via SSH via a phone that was broadcasting a wireless network. Once everything's working, run `python debug.py` and consult the output. When a beacon is in range its major & minor values are printed, although if multiple packets are received in a ro from one beacon only the first is displayed. If you have modified a given beacon and wish to test its range again, you will need to walk to the sight of another beacon then walk back to the original one. The Shutdown functionality has not been implemented in this script.
+3. Walk your root taking care to pass the beacons in the same order that the participants will do whilst checking that you are happy with their performance. Pay particular attention to scenarios where 2 beacons are close to each other, consulting the output from the Pi to make sure that it is not possible for both of them to be detected at the same time. If this does happen, experiment with repositioning one of the beacons slightly - E.G. high up, low down, inside a cupboard, behind a door etc. Please also be mindful of scenarios where participants may pass a beacon on root to another one - E.G. try to avoid beacon 5 being in range when participants are nearing beacon 2. We found the Estimote companion app useful for modifying the range of individual beacons on the go for scenarios where "3 feet" was actually considerably less due to the environment.
 4. Once you're happy with everything you will have most likely walked the root a large number of times and will have started to question why you committed to doing the activity in the first place. Never the less, it is important to carry out one last check by starting at the beginning & walking it through to confirm that no more adjustments need to be made. Keep on doing this until you can walk the root without changing anything.
 
 ##Supplied .py files:
@@ -77,8 +77,8 @@ We found that a treasure hunt that contained 11 clues took just over 5 hours of 
 3 .py files are supplied with this activity:
 
 * bluescan.py - methods to scan for nearby BLE devices. Participants need not concern themselves with the content of this file.
-* debug.py - a minimal implementation of the treasure hunt activity for debugging purposes.
-* wayfindr.py - the main treasure hunt file that participants should modify.
+* debug.py - a minimal implementation of the activity for debugging purposes.
+* wayfindr.py - the main file that participants should modify.
 
 ##Understanding wayfindr.py:
 
@@ -100,7 +100,7 @@ Whilst the code is well commented, a breakdown of the various methods & sections
     2. Check if the UUID & major values of the packet match those that we set above and that the beacon we've found isn't the same one as the last one we found. If this is the case we do a number of things:
       1. Play a clue using the minor value of the packet to determine which clue we need to play.
       2. Keep track of which beacon we've just encountered.
-      3. Shutdown the Pi if the beacon is the last one in the hunt.
+      3. Shutdown the Pi if the beacon is the last one of the root.
 
 ##Creating the sounds:
 
