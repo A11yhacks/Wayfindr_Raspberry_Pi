@@ -30,8 +30,8 @@ def parsePacket(packet):
  else:
   return outputToReturn
 
-#Play a clue sound
-def playClue(id):
+#Play an instruction
+def playInstruction(id):
  try:
   os.system("aplay ALERT_GENERAL.wav > /dev/null 2>&1")
   os.system("aplay "+str(id)+".wav > /dev/null 2>&1")
@@ -57,7 +57,7 @@ os.system("amixer set \"PCM\",0 100% > /dev/null 2>&1")
 
 #Play the introduction sound and the first clue
 os.system("aplay startup.wav > /dev/null 2>&1")
-playClue("intro")
+playInstruction("intro")
 
 while True:
  results=blescan.parse_events(sock, 10) #socket, maxNumberOfResults (default is 100)
@@ -66,7 +66,7 @@ while True:
   try:
    if parsed["UUID"] == iBeaconUUID and parsed["major"] == iBeaconMajor and parsed["minor"] != lastEncounterediBeacon: #If we've encountered an Estimote iBeacon that has our major Id but is not the last one we delt with
     print(parsed["minor"])
-    playClue(parsed["minor"])
+    playInstruction(parsed["minor"])
     lastEncounterediBeacon=parsed["minor"]
     if parsed["minor"] == "12":
      os.system("aplay ALERT_JOURNEY_COMPLETE.wav > /dev/null 2>&1")
