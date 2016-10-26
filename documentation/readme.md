@@ -1,8 +1,8 @@
-#Treasure hunt documentation for mentors
+#Wayfindr indoor navigation documentation for mentors
 
-This activity uses BLE beacons & Raspberry Pis to create a high-tech treasure hunt. The following features have been implemented out of the box:
+This activity uses BLE beacons & Raspberry Pis to create a system that audibly guides participants around a root. The following features have been implemented out of the box:
 
-* The treasure hunt script starts at boot negating the need for familiarity with Raspbian.
+* The script starts at boot negating the need for familiarity with Raspbian.
 * Completely audible to enable headless operation.
 * The first clue is sounded automatically. Subsequent clues are triggered when a given beacon is in range.
 * Automatic shutdown when a given beacon is encountered to prevent file system corruption.
